@@ -2,29 +2,32 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "motion/react";
 import { ShoppingBag, Menu, X } from "lucide-react";
 import { useCart } from "@/context/CartContext";
-
-const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Collections", href: "/" },
-  { label: "Decor", href: "/" },
-  { label: "Seating", href: "/" },
-  { label: "Journal", href: "/" },
-];
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {
+  const t = useTranslations("Navbar");
   const { cartCount, setIsCartOpen } = useCart();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const NAV_LINKS = [
+    { label: t("home"), href: "/" },
+    { label: t("collections"), href: "/" },
+    { label: t("decor"), href: "/" },
+    { label: t("seating"), href: "/" },
+    { label: t("journal"), href: "/" },
+  ];
 
   return (
     <header className="sticky top-0 z-40 h-20 backdrop-blur-md bg-white/80 border-b border-zinc-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
         <button
-          className="lg:hidden p-2 -ml-2 rounded-sm hover:bg-zinc-50 transition-colors"
+          className="lg:hidden p-2 -ml-2 rtl:-mr-2 rounded-sm hover:bg-zinc-50 transition-colors"
           onClick={() => setMobileOpen(true)}
-          aria-label="Open menu"
+          aria-label={t("openMenu")}
         >
           <Menu className="h-5 w-5 text-zinc-900" />
         </button>
@@ -36,12 +39,12 @@ export default function Navbar() {
           MODERN<span className="text-zinc-300">.</span>
         </Link>
 
-        
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1">
+          <LanguageSwitcher />
           <button
             onClick={() => setIsCartOpen(true)}
-            className="relative p-2 -mr-2 rounded-sm hover:bg-zinc-50 transition-colors flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-zinc-900"
-            aria-label={`Cart with ${cartCount} items`}
+            className="relative p-2 -mr-2 rtl:-ml-2 rounded-sm hover:bg-zinc-50 transition-colors flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-zinc-900"
+            aria-label={t("cartLabel", { count: cartCount })}
           >
             <ShoppingBag className="h-5 w-5" />
             {cartCount > 0 && (
@@ -66,7 +69,7 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 left-0 bottom-0 w-72 bg-white shadow-xl z-50 lg:hidden"
+              className="fixed top-0 left-0 rtl:left-auto rtl:right-0 bottom-0 w-72 bg-white shadow-xl z-50 lg:hidden"
             >
               <div className="flex items-center justify-between p-6 border-b border-zinc-100">
                 <span className="text-lg font-bold tracking-tighter italic font-serif">
@@ -75,7 +78,7 @@ export default function Navbar() {
                 <button
                   onClick={() => setMobileOpen(false)}
                   className="p-2 -mr-2 rounded-sm hover:bg-zinc-50 transition-colors"
-                  aria-label="Close menu"
+                  aria-label={t("closeMenu")}
                 >
                   <X className="h-5 w-5 text-zinc-900" />
                 </button>

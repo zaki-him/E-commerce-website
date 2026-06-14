@@ -1,0 +1,133 @@
+{
+  "Navbar": {
+    "home": "الرئيسية",
+    "collections": "المجموعات",
+    "decor": "ديكور",
+    "seating": "مقاعد",
+    "journal": "المجلة",
+    "brand": "مودرن.",
+    "openMenu": "فتح القائمة",
+    "closeMenu": "إغلاق القائمة",
+    "cartLabel": "السلة ({count})"
+  },
+  "Hero": {
+    "heading": "أشياء\nمصممة\nلتدوم.",
+    "subtext": "أثاث وأشياء منتقاة للمنزل العصري. كل قطعة تم اختيارها لنزاهة شكلها وجودة صنعها.",
+    "cta": "تسوق المجموعة",
+    "imageAlt": "داخلية عصرية بأثاث منتقى"
+  },
+  "ProductGrid": {
+    "allProducts": "جميع المنتجات",
+    "category": "الفئة",
+    "priceRange": "نطاق السعر",
+    "filters": "التصفية",
+    "openFilters": "فتح التصفية",
+    "closeFilters": "إغلاق التصفية",
+    "clearAll": "مسح الكل",
+    "noResults": "لا توجد منتجات تطابق تصفيتك.",
+    "clearFilters": "مسح التصفية",
+    "quickAdd": "إضافة سريعة"
+  },
+  "CartSidebar": {
+    "title": "السلة ({count})",
+    "empty": "سلتك فارغة",
+    "continueShopping": "مواصلة التسوق",
+    "subtotal": "المجموع الفرعي",
+    "order": "طلب",
+    "decreaseQty": "تقليل الكمية",
+    "increaseQty": "زيادة الكمية",
+    "removeItem": "إزالة {name}",
+    "close": "إغلاق السلة"
+  },
+  "Order": {
+    "title": "طلب",
+    "details": "التفاصيل",
+    "name": "الاسم",
+    "namePlaceholder": "اسمك",
+    "phone": "الهاتف",
+    "phonePlaceholder": "966 5 0000 0000",
+    "location": "الموقع",
+    "locationPlaceholder": "المدينة، المنطقة، عنوان التوصيل",
+    "placeOrder": "تقديم الطلب",
+    "nameRequired": "الاسم مطلوب",
+    "phoneRequired": "الهاتف مطلوب",
+    "phoneInvalid": "أدخل رقم هاتف صحيح",
+    "locationRequired": "الموقع مطلوب",
+    "emptyCart": "سلتك فارغة",
+    "continueShopping": "مواصلة التسوق",
+    "orderPlaced": "تم تقديم الطلب",
+    "thankYou": "شكراً، {name}. سنتصل بك على {phone} لتأكيد طلبك.",
+    "orderSummary": "ملخص الطلب",
+    "total": "المجموع",
+    "deliveryDetails": "تفاصيل التوصيل",
+    "returnToShop": "العودة إلى المتجر",
+    "cartLabel": "السلة ({count})",
+    "qty": "الكمية {quantity}",
+    "delivery": "التوصيل",
+    "free": "مجاني"
+  },
+  "Product": {
+    "backToCollection": "→ العودة إلى المجموعة",
+    "freeShipping": "شحن مجاني",
+    "freeShippingDesc": "للطلبات فوق 100 دولار",
+    "secureCheckout": "دفع آمن",
+    "secureCheckoutDesc": "مشفر بـ SSL",
+    "returns": "إرجاع خلال 30 يوم",
+    "returnsDesc": "بدون طرح أسئلة",
+    "addToBag": "أضف إلى الحقيبة",
+    "addedToCart": "تمت الإضافة إلى السلة"
+  },
+  "Admin": {
+    "login": {
+      "brand": "مودرن.",
+      "heading": "دخول المشرف",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "admin@example.com",
+      "password": "كلمة المرور",
+      "passwordPlaceholder": "••••••••",
+      "signIn": "تسجيل الدخول",
+      "signingIn": "جارٍ تسجيل الدخول..."
+    },
+    "sidebar": {
+      "dashboard": "لوحة التحكم",
+      "orders": "الطلبات",
+      "signOut": "تسجيل الخروج",
+      "brand": "مودرن.",
+      "openMenu": "فتح قائمة المشرف",
+      "closeMenu": "إغلاق القائمة"
+    },
+    "dashboard": {
+      "title": "لوحة التحكم",
+      "welcome": "مرحباً، {email}.",
+      "totalOrders": "إجمالي الطلبات",
+      "products": "المنتجات"
+    },
+    "orders": {
+      "title": "الطلبات",
+      "count": "{count, plural, one {# طلب} two {# طلبان} few {# طلبات} other {# طلب}}",
+      "customer": "العميل",
+      "phone": "الهاتف",
+      "location": "الموقع",
+      "items": "المنتجات",
+      "itemsCount": "{count, plural, one {# منتج} two {# منتجان} few {# منتجات} other {# منتج}}",
+      "total": "المجموع",
+      "status": "الحالة",
+      "date": "التاريخ",
+      "actions": "الإجراءات",
+      "noOrders": "لا توجد طلبات بعد.",
+      "pageOf": "الصفحة {current} من {total}",
+      "previous": "السابق",
+      "next": "التالي",
+      "all": "الكل",
+      "pending": "قيد الانتظار",
+      "processing": "قيد المعالجة",
+      "shipped": "تم الشحن",
+      "delivered": "تم التوصيل",
+      "cancelled": "ملغي"
+    },
+    "actions": {
+      "deleteConfirm": "حذف هذا الطلب؟",
+      "deleteLabel": "حذف الطلب"
+    }
+  }
+}

@@ -1,10 +1,12 @@
 import { createClient } from "@/lib/supabase/server";
+import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { products } from "@/lib/data";
 
 export default async function AdminDashboard() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  const t = await getTranslations("Admin.dashboard");
   const [orderCount, productCount] = await Promise.all([
     prisma.order.count(),
     Promise.resolve(products.length),
@@ -14,16 +16,16 @@ export default async function AdminDashboard() {
     <div className="p-8">
       <div className="mb-8">
         <h1 className="font-serif text-3xl font-bold tracking-tight text-zinc-900">
-          Dashboard
+          {t("title")}
         </h1>
         <p className="mt-2 text-sm text-zinc-500">
-          Welcome, {user?.email ?? "admin"}.
+          {t("welcome", { email: user?.email ?? "admin" })}
         </p>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2">
-        <StatCard label="Total Orders" value={String(orderCount)} />
-        <StatCard label="Products" value={String(productCount)} />
+        <StatCard label={t("totalOrders")} value={String(orderCount)} />
+        <StatCard label={t("products")} value={String(productCount)} />
       </div>
     </div>
   );

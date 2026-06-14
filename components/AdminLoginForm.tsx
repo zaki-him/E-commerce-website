@@ -3,11 +3,13 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useAuth } from "@/context/AuthContext";
 import { createClient } from "@/lib/supabase/client";
 import { Loader2 } from "lucide-react";
 
 export default function AdminLoginForm() {
+  const t = useTranslations("Admin.login");
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -65,7 +67,7 @@ export default function AdminLoginForm() {
             MODERN<span className="text-zinc-300">.</span>
           </Link>
           <p className="mt-2 text-[11px] font-semibold uppercase tracking-widest text-zinc-400">
-            Admin Access
+            {t("heading")}
           </p>
         </div>
 
@@ -79,7 +81,7 @@ export default function AdminLoginForm() {
                 htmlFor="email"
                 className="block text-[11px] font-semibold uppercase tracking-widest text-zinc-500 mb-2"
               >
-                Email
+                {t("email")}
               </label>
               <input
                 id="email"
@@ -88,7 +90,7 @@ export default function AdminLoginForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full border border-zinc-200 bg-white px-3 py-2.5 text-sm text-zinc-900 placeholder-zinc-400 outline-none transition-colors focus:border-zinc-900 focus:ring-0"
-                placeholder="admin@example.com"
+                placeholder={t("emailPlaceholder")}
               />
             </div>
 
@@ -97,7 +99,7 @@ export default function AdminLoginForm() {
                 htmlFor="password"
                 className="block text-[11px] font-semibold uppercase tracking-widest text-zinc-500 mb-2"
               >
-                Password
+                {t("password")}
               </label>
               <input
                 id="password"
@@ -106,7 +108,7 @@ export default function AdminLoginForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full border border-zinc-200 bg-white px-3 py-2.5 text-sm text-zinc-900 placeholder-zinc-400 outline-none transition-colors focus:border-zinc-900 focus:ring-0"
-                placeholder="••••••••"
+                placeholder={t("passwordPlaceholder")}
               />
             </div>
           </div>
@@ -123,7 +125,7 @@ export default function AdminLoginForm() {
             className="mt-6 w-full bg-zinc-900 px-4 py-3 text-[11px] font-bold uppercase tracking-widest text-white transition-colors hover:bg-zinc-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {loading && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-            {loading ? "Signing in..." : "Sign In"}
+            {loading ? t("signingIn") : t("signIn")}
           </button>
         </form>
       </div>

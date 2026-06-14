@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Trash2 } from "lucide-react";
 import { updateOrderStatus, deleteOrder } from "@/lib/actions/order";
 
@@ -13,6 +14,8 @@ export default function OrderActions({
   orderId: string;
   currentStatus: string;
 }) {
+  const t = useTranslations("Admin.orders");
+  const actionsT = useTranslations("Admin.actions");
   const router = useRouter();
 
   async function handleStatusChange(formData: FormData) {
@@ -24,7 +27,7 @@ export default function OrderActions({
   }
 
   async function handleDelete() {
-    if (!confirm("Delete this order?")) return;
+    if (!confirm(actionsT("deleteConfirm"))) return;
     await deleteOrder(orderId);
     router.refresh();
   }
@@ -41,7 +44,7 @@ export default function OrderActions({
         >
           {STATUSES.map((s) => (
             <option key={s} value={s}>
-              {s}
+              {t(s)}
             </option>
           ))}
         </select>
@@ -49,7 +52,7 @@ export default function OrderActions({
       <button
         onClick={handleDelete}
         className="rounded-sm p-1.5 text-zinc-400 hover:bg-red-50 hover:text-red-600 transition-colors"
-        aria-label="Delete order"
+        aria-label={actionsT("deleteLabel")}
       >
         <Trash2 className="h-3.5 w-3.5" />
       </button>

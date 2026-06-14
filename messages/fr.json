@@ -1,0 +1,133 @@
+{
+  "Navbar": {
+    "home": "Accueil",
+    "collections": "Collections",
+    "decor": "Décoration",
+    "seating": "Sièges",
+    "journal": "Journal",
+    "brand": "MODERN.",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "cartLabel": "Panier ({count})"
+  },
+  "Hero": {
+    "heading": "Objets\nconçus pour\ndurer.",
+    "subtext": "Mobilier et objets curatés pour la maison moderne. Chaque pièce est choisie pour son intégrité de forme et la qualité de sa fabrication.",
+    "cta": "Explorer la Collection",
+    "imageAlt": "Intérieur moderne avec mobilier curaté"
+  },
+  "ProductGrid": {
+    "allProducts": "Tous les Produits",
+    "category": "Catégorie",
+    "priceRange": "Fourchette de Prix",
+    "filters": "Filtres",
+    "openFilters": "Ouvrir les filtres",
+    "closeFilters": "Fermer les filtres",
+    "clearAll": "Tout effacer",
+    "noResults": "Aucun produit ne correspond à vos filtres.",
+    "clearFilters": "Effacer les filtres",
+    "quickAdd": "Ajout Rapide"
+  },
+  "CartSidebar": {
+    "title": "Panier ({count})",
+    "empty": "Votre panier est vide",
+    "continueShopping": "Continuer vos achats",
+    "subtotal": "Sous-total",
+    "order": "Commander",
+    "decreaseQty": "Diminuer la quantité",
+    "increaseQty": "Augmenter la quantité",
+    "removeItem": "Retirer {name}",
+    "close": "Fermer le panier"
+  },
+  "Order": {
+    "title": "Commande",
+    "details": "Détails",
+    "name": "Nom",
+    "namePlaceholder": "Votre nom",
+    "phone": "Téléphone",
+    "phonePlaceholder": "+33 6 00 00 00 00",
+    "location": "Adresse",
+    "locationPlaceholder": "Ville, quartier, adresse de livraison",
+    "placeOrder": "Passer la commande",
+    "nameRequired": "Le nom est requis",
+    "phoneRequired": "Le téléphone est requis",
+    "phoneInvalid": "Entrez un numéro de téléphone valide",
+    "locationRequired": "L'adresse est requise",
+    "emptyCart": "Votre panier est vide",
+    "continueShopping": "Continuer vos achats",
+    "orderPlaced": "Commande passée",
+    "thankYou": "Merci, {name}. Nous vous contacterons au {phone} pour confirmer votre commande.",
+    "orderSummary": "Récapitulatif",
+    "total": "Total",
+    "deliveryDetails": "Livraison",
+    "returnToShop": "Retour à la boutique",
+    "cartLabel": "Panier ({count})",
+    "qty": "Qté {quantity}",
+    "delivery": "Livraison",
+    "free": "Gratuit"
+  },
+  "Product": {
+    "backToCollection": "← Retour à la collection",
+    "freeShipping": "Livraison offerte",
+    "freeShippingDesc": "Pour les commandes de plus de 100€",
+    "secureCheckout": "Paiement sécurisé",
+    "secureCheckoutDesc": "Crypté SSL",
+    "returns": "Retour sous 30 jours",
+    "returnsDesc": "Sans question posée",
+    "addToBag": "Ajouter au panier",
+    "addedToCart": "Ajouté au panier"
+  },
+  "Admin": {
+    "login": {
+      "brand": "MODERN.",
+      "heading": "Accès Administrateur",
+      "email": "E-mail",
+      "emailPlaceholder": "admin@example.com",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "••••••••",
+      "signIn": "Connexion",
+      "signingIn": "Connexion en cours..."
+    },
+    "sidebar": {
+      "dashboard": "Tableau de bord",
+      "orders": "Commandes",
+      "signOut": "Déconnexion",
+      "brand": "MODERN.",
+      "openMenu": "Ouvrir le menu admin",
+      "closeMenu": "Fermer le menu"
+    },
+    "dashboard": {
+      "title": "Tableau de bord",
+      "welcome": "Bienvenue, {email}.",
+      "totalOrders": "Total des commandes",
+      "products": "Produits"
+    },
+    "orders": {
+      "title": "Commandes",
+      "count": "{count, plural, one {# commande} other {# commandes}}",
+      "customer": "Client",
+      "phone": "Téléphone",
+      "location": "Adresse",
+      "items": "Articles",
+      "itemsCount": "{count, plural, one {# article} other {# articles}}",
+      "total": "Total",
+      "status": "Statut",
+      "date": "Date",
+      "actions": "Actions",
+      "noOrders": "Aucune commande pour le moment.",
+      "pageOf": "Page {current} sur {total}",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "all": "Tout",
+      "pending": "En attente",
+      "processing": "En cours",
+      "shipped": "Expédiée",
+      "delivered": "Livrée",
+      "cancelled": "Annulée"
+    },
+    "actions": {
+      "deleteConfirm": "Supprimer cette commande ?",
+      "deleteLabel": "Supprimer la commande"
+    }
+  }
+}

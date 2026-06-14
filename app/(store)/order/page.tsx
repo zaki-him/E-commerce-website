@@ -5,24 +5,27 @@ import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { z } from "zod";
 import { motion } from "motion/react";
 import { CheckCircle2, ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { createOrder } from "@/lib/actions/order";
 
-const orderSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  phone: z
-    .string()
-    .min(1, "Phone is required")
-    .regex(/^[\d\s\-().+]+$/, "Enter a valid phone number"),
-  location: z.string().min(1, "Location is required"),
-});
-
-type OrderData = z.infer<typeof orderSchema>;
+type OrderData = z.infer<ReturnType<typeof getOrderSchema>>;
 
 const ORDERS_KEY = "ecommerce_orders";
+
+function getOrderSchema(t: ReturnType<typeof useTranslations<"Order">>) {
+  return z.object({
+    name: z.string().min(1, t("nameRequired")),
+    phone: z
+      .string()
+      .min(1, t("phoneRequired"))
+      .regex(/^[\d\s\-().+]+$/, t("phoneInvalid")),
+    location: z.string().min(1, t("locationRequired")),
+  });
+}
 
 function InputField({
   label,
@@ -51,6 +54,7 @@ function InputField({
 }
 
 export default function OrderPage() {
+  const t = useTranslations("Order");
   const { items, cartTotal, cartCount, clearCart } = useCart();
   const [submitted, setSubmitted] = useState(false);
   const [lastOrder, setLastOrder] = useState<{
@@ -61,7 +65,7 @@ export default function OrderPage() {
   } | null>(null);
 
   const form = useForm<OrderData>({
-    resolver: zodResolver(orderSchema),
+    resolver: zodResolver(getOrderSchema(t)),
   });
 
   const onSubmit = async (data: OrderData) => {
@@ -115,12 +119,12 @@ export default function OrderPage() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         <div className="flex flex-col items-center justify-center gap-4 py-16">
           <ShoppingBag className="h-10 w-10 text-zinc-300" />
-          <p className="text-sm text-zinc-400">Your cart is empty</p>
+          <p className="text-sm text-zinc-400">{t("emptyCart")}</p>
           <Link
             href="/"
             className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-900 hover:text-zinc-500 transition-colors"
           >
-            Continue Shopping
+            {t("continueShopping")}
           </Link>
         </div>
       </div>
@@ -137,16 +141,18 @@ export default function OrderPage() {
       >
         <CheckCircle2 className="h-16 w-16 text-green-500 mx-auto mb-6" />
         <h2 className="text-3xl font-serif italic text-zinc-900 mb-2">
-          Order placed
+          {t("orderPlaced")}
         </h2>
         <p className="text-sm text-zinc-500 mb-8">
-          Thank you, {lastOrder.data.name}. We will contact you at{" "}
-          {lastOrder.data.phone} to confirm your order.
+          {t("thankYou", {
+            name: lastOrder.data.name,
+            phone: lastOrder.data.phone,
+          })}
         </p>
 
         <div className="bg-zinc-50 border border-zinc-100 rounded-sm p-6 text-left mb-8 max-w-md mx-auto">
           <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400 mb-4">
-            Order Summary
+            {t("orderSummary")}
           </h3>
           <div className="space-y-3">
             {lastOrder.items.map((item, idx) => (
@@ -163,7 +169,7 @@ export default function OrderPage() {
           </div>
           <div className="border-t border-zinc-200 mt-4 pt-4 flex justify-between">
             <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-900">
-              Total
+              {t("total")}
             </span>
             <span className="text-sm font-mono text-zinc-900">
               ${lastOrder.total.toLocaleString()}
@@ -173,7 +179,7 @@ export default function OrderPage() {
 
         <div className="bg-zinc-50 border border-zinc-100 rounded-sm p-6 text-left mb-8 max-w-md mx-auto">
           <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400 mb-3">
-            Delivery Details
+            {t("deliveryDetails")}
           </h3>
           <div className="text-sm text-zinc-600 space-y-1">
             <p>{lastOrder.data.name}</p>
@@ -186,7 +192,7 @@ export default function OrderPage() {
           href="/"
           className="inline-block bg-zinc-900 px-8 py-4 text-[10px] font-bold text-white uppercase tracking-[0.2em] hover:bg-black transition-colors rounded-sm"
         >
-          Return to Shop
+          {t("returnToShop")}
         </Link>
       </motion.div>
     );
@@ -194,7 +200,9 @@ export default function OrderPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-      <h1 className="text-3xl font-serif italic text-zinc-900 mb-2">Order</h1>
+      <h1 className="text-3xl font-serif italic text-zinc-900 mb-2">
+        {t("title")}
+      </h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mt-10">
         <div className="lg:col-span-2">
@@ -206,28 +214,28 @@ export default function OrderPage() {
             className="bg-white px-8 py-10 rounded-sm border border-zinc-100 shadow-sm"
           >
             <h2 className="text-2xl font-bold uppercase tracking-wider text-zinc-900 mb-8">
-              Details
+              {t("details")}
             </h2>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               className="space-y-5"
             >
               <InputField
-                label="Name"
-                placeholder="Your name"
+                label={t("name")}
+                placeholder={t("namePlaceholder")}
                 {...form.register("name")}
                 error={form.formState.errors.name?.message}
               />
               <InputField
-                label="Phone"
+                label={t("phone")}
                 type="tel"
-                placeholder="+1 555-000-0000"
+                placeholder={t("phonePlaceholder")}
                 {...form.register("phone")}
                 error={form.formState.errors.phone?.message}
               />
               <InputField
-                label="Location"
-                placeholder="City, area, delivery address"
+                label={t("location")}
+                placeholder={t("locationPlaceholder")}
                 {...form.register("location")}
                 error={form.formState.errors.location?.message}
               />
@@ -236,7 +244,7 @@ export default function OrderPage() {
                   type="submit"
                   className="w-full bg-zinc-900 px-8 py-4 text-[10px] font-bold text-white uppercase tracking-[0.2em] hover:bg-black transition-colors rounded-sm cursor-pointer"
                 >
-                  Place Order — ${cartTotal.toLocaleString()}
+                  {t("placeOrder")} — ${cartTotal.toLocaleString()}
                 </button>
               </div>
             </form>
@@ -246,7 +254,7 @@ export default function OrderPage() {
         <div className="lg:col-span-1">
           <div className="backdrop-blur-xl bg-white/80 border border-white/50 shadow-2xl rounded-sm p-6 sticky top-24 space-y-4">
             <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">
-              Cart ({cartCount})
+              {t("cartLabel", { count: cartCount })}
             </h3>
             <div className="space-y-3 max-h-64 overflow-y-auto">
               {items.map((item) => (
@@ -265,7 +273,7 @@ export default function OrderPage() {
                       {item.product.name}
                     </p>
                     <p className="text-[10px] text-zinc-400">
-                      Qty {item.quantity}
+                      {t("qty", { quantity: item.quantity })}
                     </p>
                     <p className="text-[10px] font-mono text-zinc-500">
                       ${item.product.price}
@@ -276,20 +284,24 @@ export default function OrderPage() {
             </div>
             <div className="border-t border-zinc-100 pt-4 space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] text-zinc-500">Subtotal</span>
+                <span className="text-[10px] text-zinc-500">
+                  {t("subtotal")}
+                </span>
                 <span className="text-[10px] font-mono text-zinc-900">
                   ${cartTotal.toLocaleString()}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[10px] text-zinc-500">Delivery</span>
+                <span className="text-[10px] text-zinc-500">
+                  {t("delivery")}
+                </span>
                 <span className="text-[10px] font-mono text-green-600">
-                  Free
+                  {t("free")}
                 </span>
               </div>
               <div className="flex items-center justify-between border-t border-zinc-100 pt-2">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-900">
-                  Total
+                  {t("total")}
                 </span>
                 <span className="text-xs font-mono text-zinc-900">
                   ${cartTotal.toLocaleString()}

@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Check } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import type { Product } from "@/lib/data";
 
 export default function AddToCartButton({ product }: { product: Product }) {
+  const t = useTranslations("Product");
   const { addToCart } = useCart();
   const [added, setAdded] = useState(false);
 
@@ -23,10 +25,10 @@ export default function AddToCartButton({ product }: { product: Product }) {
       {added ? (
         <>
           <Check className="h-4 w-4" />
-          Added to Cart
+          {t("addedToCart")}
         </>
       ) : (
-        "Add to Bag"
+        t("addToBag")
       )}
     </button>
   );

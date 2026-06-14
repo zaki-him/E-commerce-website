@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "motion/react";
 import { Filter, X } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { products, categories, priceRanges, type Category } from "@/lib/data";
 import { useCart } from "@/context/CartContext";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -16,6 +16,7 @@ interface Filters {
 }
 
 export default function ProductGrid() {
+  const t = useTranslations("ProductGrid");
   const isMobile = useIsMobile();
   const { addToCart } = useCart();
   const [filterOpen, setFilterOpen] = useState(false);
@@ -55,10 +56,9 @@ export default function ProductGrid() {
 
   const FilterContent = () => (
     <div className="space-y-8">
-
       <div>
         <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 mb-3">
-          Category
+          {t("category")}
         </h3>
         <div className="space-y-2">
           {categories.map((cat) => (
@@ -82,7 +82,7 @@ export default function ProductGrid() {
 
       <div>
         <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 mb-3">
-          Price Range
+          {t("priceRange")}
         </h3>
         <div className="space-y-2">
           {priceRanges.map((range) => (
@@ -120,15 +120,15 @@ export default function ProductGrid() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-10">
           <h2 className="text-3xl font-serif italic text-zinc-900">
-            All Products
+            {t("allProducts")}
           </h2>
           <button
             onClick={() => setFilterOpen(true)}
             className="lg:hidden flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-zinc-500 hover:text-zinc-900 transition-colors cursor-pointer"
-            aria-label="Open filters"
+            aria-label={t("openFilters")}
           >
             <Filter className="h-4 w-4" />
-            Filters
+            {t("filters")}
             {hasActiveFilters && (
               <span className="h-2 w-2 rounded-full bg-zinc-900" />
             )}
@@ -139,14 +139,14 @@ export default function ProductGrid() {
           <aside className="hidden lg:block w-56 shrink-0">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-[11px] font-bold uppercase tracking-wider text-zinc-900">
-                Filters
+                {t("filters")}
               </h2>
               {hasActiveFilters && (
                 <button
                   onClick={clearFilters}
                   className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 hover:text-zinc-900 transition-colors cursor-pointer"
                 >
-                  Clear all
+                  {t("clearAll")}
                 </button>
               )}
             </div>
@@ -157,13 +157,13 @@ export default function ProductGrid() {
             {filtered.length === 0 ? (
               <div className="text-center py-16">
                 <p className="text-sm text-zinc-400 mb-4">
-                  No products match your filters.
+                  {t("noResults")}
                 </p>
                 <button
                   onClick={clearFilters}
                   className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-900 hover:text-zinc-500 transition-colors cursor-pointer"
                 >
-                  Clear filters
+                  {t("clearFilters")}
                 </button>
               </div>
             ) : (
@@ -195,7 +195,7 @@ export default function ProductGrid() {
                           }}
                           className="w-full bg-white/80 backdrop-blur-md px-4 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-900 shadow-xl border border-white/50 hover:bg-white/90 transition-colors rounded-sm cursor-pointer"
                         >
-                          Quick Add
+                          {t("quickAdd")}
                         </button>
                       </div>
                     </Link>
@@ -213,7 +213,6 @@ export default function ProductGrid() {
                         ${product.price}
                       </span>
                     </div>
-
                   </motion.div>
                 ))}
               </div>
@@ -243,21 +242,21 @@ export default function ProductGrid() {
                 <div className="flex items-center justify-between mb-8">
                   <div className="flex items-center gap-3">
                     <h2 className="text-[11px] font-bold uppercase tracking-wider text-zinc-900">
-                      Filters
+                      {t("filters")}
                     </h2>
                     {hasActiveFilters && (
                       <button
                         onClick={clearFilters}
                         className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 hover:text-zinc-900 transition-colors cursor-pointer"
                       >
-                        Clear all
+                        {t("clearAll")}
                       </button>
                     )}
                   </div>
                   <button
                     onClick={() => setFilterOpen(false)}
                     className="p-2 -mr-2 rounded-sm hover:bg-zinc-50 transition-colors cursor-pointer"
-                    aria-label="Close filters"
+                    aria-label={t("closeFilters")}
                   >
                     <X className="h-4 w-4 text-zinc-900" />
                   </button>

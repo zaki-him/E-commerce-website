@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import OrderActions from "@/components/OrderActions";
 
@@ -11,6 +12,7 @@ export default async function AdminOrders({
 }: {
   searchParams: Promise<{ page?: string; status?: string }>;
 }) {
+  const t = await getTranslations("Admin.orders");
   const params = await searchParams;
   const currentPage = Math.max(1, Number(params.page) || 1);
   const currentStatus = params.status && STATUSES.includes(params.status as any) ? params.status : "all";
@@ -34,10 +36,10 @@ export default async function AdminOrders({
     <div className="p-8">
       <div className="mb-8">
         <h1 className="font-serif text-3xl font-bold tracking-tight text-zinc-900">
-          Orders
+          {t("title")}
         </h1>
         <p className="mt-2 text-sm text-zinc-500">
-          {totalCount} order{totalCount !== 1 ? "s" : ""}
+          {t("count", { count: totalCount })}
         </p>
       </div>
 
@@ -57,7 +59,7 @@ export default async function AdminOrders({
                   : "border border-zinc-200 text-zinc-500 hover:border-zinc-300 hover:text-zinc-700"
               }`}
             >
-              {status}
+              {t(status)}
             </Link>
           );
         })}
@@ -69,69 +71,71 @@ export default async function AdminOrders({
           <thead>
             <tr className="border-b border-zinc-100">
               <th className="px-4 py-3 text-[11px] font-semibold uppercase tracking-widest text-zinc-400">
-                Customer
+                {t("customer")}
               </th>
               <th className="px-4 py-3 text-[11px] font-semibold uppercase tracking-widest text-zinc-400">
-                Phone
+                {t("phone")}
               </th>
               <th className="px-4 py-3 text-[11px] font-semibold uppercase tracking-widest text-zinc-400">
-                Location
+                {t("location")}
               </th>
               <th className="px-4 py-3 text-[11px] font-semibold uppercase tracking-widest text-zinc-400">
-                Items
+                {t("items")}
               </th>
               <th className="px-4 py-3 text-[11px] font-semibold uppercase tracking-widest text-zinc-400">
-                Total
+                {t("total")}
               </th>
               <th className="px-4 py-3 text-[11px] font-semibold uppercase tracking-widest text-zinc-400">
-                Status
+                {t("status")}
               </th>
               <th className="px-4 py-3 text-[11px] font-semibold uppercase tracking-widest text-zinc-400">
-                Date
+                {t("date")}
               </th>
               <th className="px-4 py-3 text-[11px] font-semibold uppercase tracking-widest text-zinc-400">
-                Actions
+                {t("actions")}
               </th>
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
-              <tr
-                key={order.id}
-                className="border-b border-zinc-50 last:border-0 hover:bg-zinc-50 transition-colors"
-              >
-                <td className="px-4 py-3 font-medium text-zinc-900">
-                  {order.name}
-                </td>
-                <td className="px-4 py-3 text-zinc-500">{order.phone}</td>
-                <td className="px-4 py-3 text-zinc-500">{order.location}</td>
-                <td className="px-4 py-3 text-zinc-500">
-                  {order.items.length} item{order.items.length !== 1 ? "s" : ""}
-                </td>
-                <td className="px-4 py-3 font-mono text-zinc-900">
-                  ${Number(order.total).toFixed(2)}
-                </td>
-                <td className="px-4 py-3">
-                  <StatusBadge status={order.status} />
-                </td>
-                <td className="px-4 py-3 text-zinc-400">
-                  {order.createdAt.toLocaleDateString()}
-                </td>
-                <td className="px-4 py-3">
-                  <OrderActions
-                    orderId={order.id}
-                    currentStatus={order.status}
-                  />
-                </td>
-              </tr>
-            ))}
+            {orders.map((order) => {
+              return (
+                <tr
+                  key={order.id}
+                  className="border-b border-zinc-50 last:border-0 hover:bg-zinc-50 transition-colors"
+                >
+                  <td className="px-4 py-3 font-medium text-zinc-900">
+                    {order.name}
+                  </td>
+                  <td className="px-4 py-3 text-zinc-500">{order.phone}</td>
+                  <td className="px-4 py-3 text-zinc-500">{order.location}</td>
+                  <td className="px-4 py-3 text-zinc-500">
+                    {t("itemsCount", { count: order.items.length })}
+                  </td>
+                  <td className="px-4 py-3 font-mono text-zinc-900">
+                    ${Number(order.total).toFixed(2)}
+                  </td>
+                  <td className="px-4 py-3">
+                    <StatusBadge status={order.status} />
+                  </td>
+                  <td className="px-4 py-3 text-zinc-400">
+                    {order.createdAt.toLocaleDateString()}
+                  </td>
+                  <td className="px-4 py-3">
+                    <OrderActions
+                      orderId={order.id}
+                      currentStatus={order.status}
+                    />
+                  </td>
+                </tr>
+              );
+            })}
             {orders.length === 0 && (
               <tr>
                 <td
                   colSpan={8}
                   className="px-4 py-12 text-center text-sm text-zinc-400"
                 >
-                  No orders yet.
+                  {t("noOrders")}
                 </td>
               </tr>
             )}
@@ -143,7 +147,7 @@ export default async function AdminOrders({
       {totalPages > 1 && (
         <div className="mt-6 flex items-center justify-between text-sm">
           <p className="text-zinc-500">
-            Page {currentPage} of {totalPages}
+            {t("pageOf", { current: currentPage, total: totalPages })}
           </p>
           <div className="flex gap-2">
             {currentPage > 1 && (
@@ -151,7 +155,7 @@ export default async function AdminOrders({
                 href={buildPageUrl(currentPage - 1, currentStatus)}
                 className="rounded-sm border border-zinc-200 px-4 py-2 text-[11px] font-semibold uppercase tracking-widest text-zinc-500 transition-colors hover:border-zinc-300 hover:text-zinc-700"
               >
-                Previous
+                {t("previous")}
               </Link>
             )}
             {currentPage < totalPages && (
@@ -159,7 +163,7 @@ export default async function AdminOrders({
                 href={buildPageUrl(currentPage + 1, currentStatus)}
                 className="rounded-sm border border-zinc-200 px-4 py-2 text-[11px] font-semibold uppercase tracking-widest text-zinc-500 transition-colors hover:border-zinc-300 hover:text-zinc-700"
               >
-                Next
+                {t("next")}
               </Link>
             )}
           </div>

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { products } from "@/lib/data";
 import { Shield, Truck, RefreshCw } from "lucide-react";
 import AddToCartButton from "./AddToCartButton";
@@ -29,13 +30,15 @@ export default async function ProductPage({ params }: Props) {
   const product = products.find((p) => p.id === id);
   if (!product) notFound();
 
+  const t = await getTranslations("Product");
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
       <Link
         href="/"
         className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 hover:text-zinc-900 transition-colors mb-8"
       >
-        ← Back to Collection
+        {t("backToCollection")}
       </Link>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
@@ -87,28 +90,28 @@ export default async function ProductPage({ params }: Props) {
             <div className="text-center">
               <Truck className="h-5 w-5 text-zinc-400 mx-auto" />
               <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 mt-2">
-                Free Shipping
+                {t("freeShipping")}
               </p>
               <p className="text-[10px] text-zinc-400 mt-0.5">
-                On orders over $100
+                {t("freeShippingDesc")}
               </p>
             </div>
             <div className="text-center">
               <Shield className="h-5 w-5 text-zinc-400 mx-auto" />
               <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 mt-2">
-                Secure Checkout
+                {t("secureCheckout")}
               </p>
               <p className="text-[10px] text-zinc-400 mt-0.5">
-                SSL encrypted
+                {t("secureCheckoutDesc")}
               </p>
             </div>
             <div className="text-center">
               <RefreshCw className="h-5 w-5 text-zinc-400 mx-auto" />
               <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 mt-2">
-                30-Day Returns
+                {t("returns")}
               </p>
               <p className="text-[10px] text-zinc-400 mt-0.5">
-                No questions asked
+                {t("returnsDesc")}
               </p>
             </div>
           </div>

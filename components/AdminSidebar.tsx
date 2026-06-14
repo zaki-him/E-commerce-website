@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useAuth } from "@/context/AuthContext";
 import {
   LayoutDashboard,
@@ -13,22 +14,23 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-const NAV_ITEMS = [
-  { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
-  { label: "Orders", href: "/admin/orders", icon: ShoppingBag },
-];
-
 export default function AdminSidebar() {
+  const t = useTranslations("Admin.sidebar");
   const { signOut } = useAuth();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const NAV_ITEMS = [
+    { label: t("dashboard"), href: "/admin/dashboard", icon: LayoutDashboard },
+    { label: t("orders"), href: "/admin/orders", icon: ShoppingBag },
+  ];
 
   return (
     <>
       <button
         onClick={() => setMobileOpen(true)}
         className="fixed left-4 top-4 z-50 rounded-sm border border-zinc-200 bg-white p-2.5 shadow-sm lg:hidden"
-        aria-label="Open admin menu"
+        aria-label={t("openMenu")}
       >
         <Menu className="h-5 w-5 text-zinc-900" />
       </button>
@@ -56,7 +58,7 @@ export default function AdminSidebar() {
           <button
             onClick={() => setMobileOpen(false)}
             className="rounded-sm p-1 hover:bg-zinc-50 transition-colors lg:hidden"
-            aria-label="Close menu"
+            aria-label={t("closeMenu")}
           >
             <X className="h-5 w-5 text-zinc-500" />
           </button>
@@ -95,7 +97,7 @@ export default function AdminSidebar() {
           >
             <LogOut className="h-4 w-4" />
             <span className="text-[11px] font-semibold uppercase tracking-widest">
-              Sign Out
+              {t("signOut")}
             </span>
           </button>
         </div>
