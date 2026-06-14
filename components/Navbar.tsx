@@ -3,10 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
-import { ShoppingBag, Menu, X, User } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ShoppingBag, Menu, X } from "lucide-react";
 import { useCart } from "@/context/CartContext";
-import { useAuth } from "@/context/AuthContext";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -18,9 +16,7 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const { cartCount, setIsCartOpen } = useCart();
-  const { user, signOut } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [accountOpen, setAccountOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 h-20 backdrop-blur-md bg-white/80 border-b border-zinc-100">
@@ -42,51 +38,6 @@ export default function Navbar() {
 
         
         <div className="flex items-center gap-4">
-          {user ? (
-            <div className="relative hidden sm:block">
-              <button
-                onClick={() => setAccountOpen(!accountOpen)}
-                className="p-2 rounded-sm hover:bg-zinc-50 transition-colors cursor-pointer"
-                aria-label="Account menu"
-              >
-                <User className="h-5 w-5 text-zinc-900" />
-              </button>
-              {accountOpen && (
-                <>
-                  <div
-                    className="fixed inset-0 z-40"
-                    onClick={() => setAccountOpen(false)}
-                  />
-                  <div className="absolute right-0 top-full mt-2 w-56 bg-white border border-zinc-100 shadow-lg rounded-sm z-50">
-                    <div className="p-4 border-b border-zinc-100">
-                      <p className="text-[11px] text-zinc-400 uppercase tracking-wider font-bold">
-                        Signed in as
-                      </p>
-                      <p className="text-sm text-zinc-900 mt-0.5 truncate">
-                        {user.email}
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => {
-                        signOut();
-                        setAccountOpen(false);
-                      }}
-                      className="w-full text-left px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50 transition-colors cursor-pointer"
-                    >
-                      Sign out
-                    </button>
-                  </div>
-                </>
-              )}
-            </div>
-          ) : (
-            <Link
-              href="/login"
-              className="hidden sm:inline-flex text-[11px] font-bold uppercase tracking-wider text-zinc-500 hover:text-zinc-900 transition-colors"
-            >
-              Sign in
-            </Link>
-          )}
           <button
             onClick={() => setIsCartOpen(true)}
             className="relative p-2 -mr-2 rounded-sm hover:bg-zinc-50 transition-colors flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-zinc-900"
@@ -141,39 +92,6 @@ export default function Navbar() {
                   </Link>
                 ))}
                 <hr className="border-zinc-100" />
-                {user ? (
-                  <>
-                    <span className="text-[11px] text-zinc-400">
-                      {user.email}
-                    </span>
-                    <button
-                      onClick={() => {
-                        signOut();
-                        setMobileOpen(false);
-                      }}
-                      className="text-left text-[11px] font-semibold uppercase tracking-widest text-zinc-500 hover:text-zinc-900 transition-colors cursor-pointer"
-                    >
-                      Sign out
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <Link
-                      href="/login"
-                      onClick={() => setMobileOpen(false)}
-                      className="text-[11px] font-semibold uppercase tracking-widest text-zinc-500 hover:text-zinc-900 transition-colors"
-                    >
-                      Sign in
-                    </Link>
-                    <Link
-                      href="/signup"
-                      onClick={() => setMobileOpen(false)}
-                      className="text-[11px] font-semibold uppercase tracking-widest text-zinc-500 hover:text-zinc-900 transition-colors"
-                    >
-                      Create account
-                    </Link>
-                  </>
-                )}
               </nav>
             </motion.div>
           </>

@@ -143,11 +143,11 @@ export default function CartSidebar() {
                     </span>
                   </div>
                   <Link
-                    href="/checkout"
+                    href="/order"
                     onClick={() => setIsCartOpen(false)}
                     className="block w-full bg-zinc-900 px-8 py-4 text-[10px] font-bold text-white uppercase tracking-[0.2em] hover:bg-black transition-colors rounded-sm text-center"
                   >
-                    Checkout
+                    Order
                   </Link>
                 </div>
               </>
