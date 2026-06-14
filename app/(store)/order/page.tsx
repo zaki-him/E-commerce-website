@@ -9,6 +9,7 @@ import { z } from "zod";
 import { motion } from "motion/react";
 import { CheckCircle2, ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { createOrder } from "@/lib/actions/order";
 
 const orderSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -63,18 +64,38 @@ export default function OrderPage() {
     resolver: zodResolver(orderSchema),
   });
 
-  const onSubmit = (data: OrderData) => {
-    const order = {
-      id: crypto.randomUUID(),
-      data,
-      items: items.map((i) => ({
-        name: i.product.name,
-        price: i.product.price,
-        quantity: i.quantity,
-      })),
-      total: cartTotal,
-      createdAt: new Date().toISOString(),
+  const onSubmit = async (data: OrderData) => {
+    const itemsData = items.map((i) => ({
+      name: i.product.name,
+      price: i.product.price,
+      quantity: i.quantity,
+    }));
+
+    let order: {
+      id: string;
+      data: OrderData;
+      items: { name: string; price: number; quantity: number }[];
+      total: number;
+      createdAt: string;
     };
+
+    try {
+      order = await createOrder({
+        name: data.name,
+        phone: data.phone,
+        location: data.location,
+        items: itemsData,
+        total: cartTotal,
+      });
+    } catch {
+      order = {
+        id: crypto.randomUUID(),
+        data,
+        items: itemsData,
+        total: cartTotal,
+        createdAt: new Date().toISOString(),
+      };
+    }
 
     try {
       const stored = JSON.parse(localStorage.getItem(ORDERS_KEY) || "[]");

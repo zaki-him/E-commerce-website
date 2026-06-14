@@ -8,7 +8,7 @@ export interface Product {
   image: string;
   description: string;
   features: string[];
-  stock: number;
+  stock?: number;
 }
 
 export const products: Product[] = [

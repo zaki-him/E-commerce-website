@@ -16,3 +16,24 @@ model Product {
   features    String[]
   stock       Int      @default(0)
 }
+
+model Order {
+  id        String      @id @default(uuid()) @db.Uuid
+  name      String
+  phone     String
+  location  String
+  total     Decimal     @db.Decimal(10, 2)
+  status    String      @default("pending")
+  createdAt DateTime    @default(now())
+  items     OrderItem[]
+}
+
+model OrderItem {
+  id       String  @id @default(uuid()) @db.Uuid
+  orderId  String  @db.Uuid
+  name     String
+  price    Decimal @db.Decimal(10, 2)
+  quantity Int
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
