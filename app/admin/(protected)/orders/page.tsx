@@ -1,4 +1,3 @@
-import type { Prisma } from "@prisma/client";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
@@ -27,7 +26,7 @@ export default async function AdminOrders({
       orderBy: { createdAt: "desc" },
       skip: (currentPage - 1) * PAGE_SIZE,
       take: PAGE_SIZE,
-    }) as Promise<Prisma.OrderGetPayload<{ include: { items: true } }>[]>,
+    }),
     prisma.order.count({ where }),
   ]);
 
